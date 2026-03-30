@@ -38,6 +38,30 @@ function SportsCarSVG({ color }) {
   );
 }
 
+function StatusItem({ icon, label }) {
+  if (icon === "check") {
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15 }}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="9" fill="#22c55e" />
+          <path d="M4.5 9l3 3 6-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span style={{ color: "#111" }}>{label}</span>
+      </div>
+    );
+  }
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15 }}>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ animation: "spin 1s linear infinite" }}>
+        <circle cx="9" cy="9" r="7" stroke="#e2e8f0" strokeWidth="2.5" />
+        <path d="M9 2a7 7 0 0 1 7 7" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </svg>
+      <span style={{ color: "#111" }}>{label}</span>
+    </div>
+  );
+}
+
 export default function SportsCarLoader({ size = 240 }) {
   const carGroupRef = useRef(null);
   const trailRef = useRef(null);
@@ -96,8 +120,21 @@ export default function SportsCarLoader({ size = 240 }) {
         flexDirection: "column",
         alignItems: "center",
         gap: 12,
+        fontFamily: "system-ui, sans-serif",
       }}
     >
+      <h2
+        style={{
+          fontSize: 22,
+          fontWeight: 700,
+          color: "#000",
+          margin: 0,
+          textAlign: "center",
+        }}
+      >
+        Preparing Your Quote
+      </h2>
+
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {/* Background track */}
         <circle
@@ -128,18 +165,12 @@ export default function SportsCarLoader({ size = 240 }) {
           <SportsCarSVG color={CAR_COLOR} />
         </g>
       </svg>
-      <span
-        style={{
-          fontFamily: "system-ui, sans-serif",
-          fontSize: 14,
-          fontWeight: 600,
-          color: CAR_COLOR,
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-        }}
-      >
-        Loading...
-      </span>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+        <StatusItem icon="check" label="Drivers added" />
+        <StatusItem icon="check" label="Vehicles added" />
+        <StatusItem icon="spinner" label="Calculating your rate" />
+      </div>
     </div>
   );
 }
